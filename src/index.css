@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+/* Ensure the canvas can fill the viewport */
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+}
+
+/* Ensure sections snap properly */
+section {
+  scroll-snap-align: start;
+}
