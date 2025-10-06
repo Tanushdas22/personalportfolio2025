@@ -14,7 +14,9 @@ import ElectricBorder from './reactbits/ElectricBorder'
 import Folder from './components/ui/FolderContact'
 // Background image placed by user in reference folders
 // Using import so Vite bundles and serves it
-import bgImageUrl from '../reference folders/bg.jpg'
+// Use an asset from the public directory to avoid bundling path issues
+// Place your background image at public/bg.jpg
+const bgImageUrl = '/bg.jpg'
 
 function App() {
   return (
