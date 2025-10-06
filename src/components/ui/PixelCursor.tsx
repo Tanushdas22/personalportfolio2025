@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 import { useMemo } from 'react'
+import { createPortal } from 'react-dom'
 import { Canvas, useThree } from '@react-three/fiber'
 import { shaderMaterial, useTrailTexture } from '@react-three/drei'
 import * as THREE from 'three'
@@ -136,14 +137,14 @@ export default function PixelTrail({
   color = '#ffffff',
   className = ''
 }: PixelTrailProps) {
-  return (
+  return createPortal(
     <>
       {gooeyFilter && <GooeyFilter id={gooeyFilter.id} strength={gooeyFilter.strength} />}
       <Canvas
         {...canvasProps}
         gl={glProps}
-        className={`absolute z-1 ${className}`}
-        style={gooeyFilter && { filter: `url(#${gooeyFilter.id})` }}
+        className={`fixed inset-0 z-[9999] pointer-events-auto ${className}`}
+        style={gooeyFilter ? { filter: `url(#${gooeyFilter.id})` } : undefined}
       >
         <Scene
           gridSize={gridSize}
@@ -154,7 +155,8 @@ export default function PixelTrail({
           pixelColor={color}
         />
       </Canvas>
-    </>
+    </>,
+    document.body
   )
 }
 

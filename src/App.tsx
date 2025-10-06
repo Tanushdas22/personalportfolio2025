@@ -2,7 +2,6 @@ import { Canvas } from '@react-three/fiber'
 import { Suspense } from 'react'
 import { HeroScene } from './scenes/HeroScene'
 import { HeroOverlay } from './components/ui/HeroOverlay'
-import PrismaticBurst from './components/ui/PrismaticBackground'
 import PixelTrail from './components/ui/PixelCursor'
 import BlurText from './components/ui/BlurText'
 import GradualBlur from './components/ui/GradualBlur'
@@ -13,33 +12,33 @@ import { MdEmail } from 'react-icons/md'
 import PixelTransition from './components/ui/PixelTransitionCard'
 import ElectricBorder from './reactbits/ElectricBorder'
 import Folder from './components/ui/FolderContact'
+// Background image placed by user in reference folders
+// Using import so Vite bundles and serves it
+import bgImageUrl from '../reference folders/bg.jpg'
 
 function App() {
   return (
     <div className="relative h-full w-full bg-black text-white">
-      <PixelTrail
-        gridSize={50}
-        trailSize={0.1}
-        maxAge={250}
-        interpolate={5}
-        color="#fff"
-        gooeyFilter={{ id: "custom-goo-filter", strength: 2 }}
-        className="pointer-events-none fixed inset-0 z-40"
-      />
+      
 
       {/* Welcome/Hero Section */}
-      <section className="relative h-screen snap-start overflow-hidden">
-        <PrismaticBurst
-          animationType="rotate3d"
-          intensity={1.5}
-          speed={0.3}
-          distort={0.8}
-          paused={false}
-          offset={{ x: 0, y: 0 }}
-          hoverDampness={0.2}
-          rayCount={16}
-          mixBlendMode="lighten"
-          colors={['#ff007a', '#4d3dff', '#00ff88', '#ff6b35', '#ffffff']}
+      <section
+        className="relative h-screen snap-start overflow-hidden bg-black"
+        style={{
+          backgroundImage: `url(${bgImageUrl})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <PixelTrail
+          gridSize={50}
+          trailSize={0.1}
+          maxAge={250}
+          interpolate={5}
+          color="#fff"
+          gooeyFilter={{ id: "goo-welcome", strength: 2 }}
+          className="pointer-events-none absolute inset-0"
         />
         <Canvas shadows dpr={[1, 2]} gl={{ antialias: true }} className="absolute inset-0">
           <Suspense fallback={null}>
@@ -47,19 +46,29 @@ function App() {
           </Suspense>
         </Canvas>
         <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
-          <BlurText 
-            text="Welcome" 
-            className="text-2xl md:text-4xl mb-8 text-cyan-200/90"
-            delay={100}
-            animateBy="words"
-            direction="top"
-          />
           <HeroOverlay />
         </div>
       </section>
 
       {/* About */}
-      <section className="min-h-screen snap-start grid place-items-center px-6 relative overflow-hidden bg-black">
+      <section
+        className="min-h-screen snap-start grid place-items-center px-6 relative overflow-hidden bg-black"
+        style={{
+          backgroundImage: `url(${bgImageUrl})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <PixelTrail
+          gridSize={50}
+          trailSize={0.1}
+          maxAge={250}
+          interpolate={5}
+          color="#fff"
+          gooeyFilter={{ id: "goo-about", strength: 2 }}
+          className="pointer-events-none absolute inset-0"
+        />
         <div className="max-w-4xl text-center space-y-8">
           <BlurText 
             text="About Me" 
@@ -106,7 +115,24 @@ function App() {
       </section>
 
       {/* Work Experience */}
-      <section className="min-h-screen snap-start px-6 py-16 relative overflow-hidden bg-black">
+      <section
+        className="min-h-screen snap-start px-6 py-16 relative overflow-hidden bg-black"
+        style={{
+          backgroundImage: `url(${bgImageUrl})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <PixelTrail
+          gridSize={50}
+          trailSize={0.1}
+          maxAge={250}
+          interpolate={5}
+          color="#fff"
+          gooeyFilter={{ id: "goo-work", strength: 2 }}
+          className="pointer-events-none absolute inset-0"
+        />
         <div className="mx-auto max-w-6xl">
           <BlurText 
             text="Work Experience" 
@@ -176,7 +202,24 @@ function App() {
       </section>
 
       {/* Projects */}
-      <section className="min-h-screen snap-start px-6 py-16 relative overflow-hidden bg-black">
+      <section
+        className="min-h-screen snap-start px-6 py-16 relative overflow-hidden bg-black"
+        style={{
+          backgroundImage: `url(${bgImageUrl})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <PixelTrail
+          gridSize={50}
+          trailSize={0.1}
+          maxAge={250}
+          interpolate={5}
+          color="#fff"
+          gooeyFilter={{ id: "goo-projects", strength: 2 }}
+          className="pointer-events-none absolute inset-0"
+        />
         <div className="mx-auto max-w-6xl">
           <BlurText 
             text="Projects" 
@@ -230,9 +273,9 @@ function App() {
                 chaos={0.5}
                 thickness={2}
                 style={{ borderRadius: 16 }}
-                className="col-span-1"
+                className="col-span-1 h-full"
               >
-                <div className="p-4 bg-black/80 backdrop-blur-sm rounded-[12px] h-full">
+                <div className="p-4 bg-black/80 backdrop-blur-sm rounded-[16px] h-full overflow-hidden">
                   <h3 className="text-lg font-semibold mb-2">{project.title}</h3>
                   <p className="text-white/70 text-sm mb-3 leading-relaxed">{project.description}</p>
                   <div className="text-xs text-cyan-300/80 font-mono">{project.tech}</div>
@@ -253,16 +296,35 @@ function App() {
       </section>
 
       {/* Contact */}
-      <section className="min-h-screen snap-start grid place-items-center px-6 py-24 relative overflow-hidden bg-black">
-        <div className="mx-auto max-w-4xl text-center space-y-8">
-          <BlurText 
-            text="Contact" 
-            className="text-4xl md:text-6xl"
-            delay={180}
-            animateBy="words"
-            direction="top"
-          />
-          <div className="flex justify-center">
+      <section
+        className="min-h-screen snap-start grid place-items-center px-6 py-24 relative overflow-hidden bg-black"
+        style={{
+          backgroundImage: `url(${bgImageUrl})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <PixelTrail
+          gridSize={50}
+          trailSize={0.1}
+          maxAge={250}
+          interpolate={5}
+          color="#fff"
+          gooeyFilter={{ id: "goo-contact", strength: 2 }}
+          className="pointer-events-none absolute inset-0"
+        />
+        <div className="mx-auto max-w-4xl w-full relative">
+          <div className="absolute top-8 left-8">
+            <BlurText 
+              text="Contact" 
+              className="text-4xl md:text-6xl"
+              delay={180}
+              animateBy="words"
+              direction="top"
+            />
+          </div>
+          <div className="flex justify-center pt-28">
             <Folder
               size={2}
               color="#5227FF"
@@ -286,16 +348,6 @@ function App() {
             />
           </div>
         </div>
-        <GradualBlur
-          target="parent"
-          position="bottom"
-          height="8rem"
-          strength={3}
-          divCount={8}
-          curve="ease-out"
-          exponential={true}
-          opacity={1}
-        />
       </section>
       </div>
   )
