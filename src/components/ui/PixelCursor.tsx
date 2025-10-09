@@ -1,10 +1,11 @@
 /* eslint-disable react/no-unknown-property */
-import { useMemo } from 'react';
-import { Canvas, useThree } from '@react-three/fiber';
-import { shaderMaterial, useTrailTexture } from '@react-three/drei';
-import * as THREE from 'three';
+import { useMemo } from 'react'
+import { createPortal } from 'react-dom'
+import { Canvas, useThree } from '@react-three/fiber'
+import { shaderMaterial, useTrailTexture } from '@react-three/drei'
+import * as THREE from 'three'
 
-const GooeyFilter = ({ id = 'goo-filter', strength = 10 }) => {
+const GooeyFilter = ({ id = 'goo-filter', strength = 10 }: { id?: string; strength?: number }) => {
   return (
     <svg className="absolute overflow-hidden z-1">
       <defs>
@@ -15,8 +16,8 @@ const GooeyFilter = ({ id = 'goo-filter', strength = 10 }) => {
         </filter>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
 const DotMaterial = shaderMaterial(
   {
@@ -59,14 +60,23 @@ const DotMaterial = shaderMaterial(
       gl_FragColor = vec4(pixelColor, trail);
     }
   `
-);
+)
 
-function Scene({ gridSize, trailSize, maxAge, interpolate, easingFunction, pixelColor }) {
-  const size = useThree(s => s.size);
-  const viewport = useThree(s => s.viewport);
+type SceneProps = {
+  gridSize: number
+  trailSize: number
+  maxAge: number
+  interpolate: number
+  easingFunction: (x: number) => number
+  pixelColor: string
+}
 
-  const dotMaterial = useMemo(() => new DotMaterial(), []);
-  dotMaterial.uniforms.pixelColor.value = new THREE.Color(pixelColor);
+function Scene({ gridSize, trailSize, maxAge, interpolate, easingFunction, pixelColor }: SceneProps) {
+  const size = useThree(s => s.size)
+  const viewport = useThree(s => s.viewport)
+
+  const dotMaterial = useMemo(() => new DotMaterial(), [])
+  dotMaterial.uniforms.pixelColor.value = new THREE.Color(pixelColor)
 
   const [trail, onMove] = useTrailTexture({
     size: 512,
@@ -74,16 +84,16 @@ function Scene({ gridSize, trailSize, maxAge, interpolate, easingFunction, pixel
     maxAge: maxAge,
     interpolate: interpolate || 0.1,
     ease: easingFunction || (x => x)
-  });
+  })
 
   if (trail) {
-    trail.minFilter = THREE.NearestFilter;
-    trail.magFilter = THREE.NearestFilter;
-    trail.wrapS = THREE.ClampToEdgeWrapping;
-    trail.wrapT = THREE.ClampToEdgeWrapping;
+    trail.minFilter = THREE.NearestFilter
+    trail.magFilter = THREE.NearestFilter
+    trail.wrapS = THREE.ClampToEdgeWrapping
+    trail.wrapT = THREE.ClampToEdgeWrapping
   }
 
-  const scale = Math.max(viewport.width, viewport.height) / 2;
+  const scale = Math.max(viewport.width, viewport.height) / 2
 
   return (
     <mesh scale={[scale, scale, 1]} onPointerMove={onMove}>
@@ -95,11 +105,24 @@ function Scene({ gridSize, trailSize, maxAge, interpolate, easingFunction, pixel
         mouseTrail={trail}
       />
     </mesh>
-  );
+  )
+}
+
+type PixelTrailProps = {
+  gridSize?: number
+  trailSize?: number
+  maxAge?: number
+  interpolate?: number
+  easingFunction?: (x: number) => number
+  canvasProps?: any
+  glProps?: any
+  gooeyFilter?: { id: string; strength: number }
+  color?: string
+  className?: string
 }
 
 export default function PixelTrail({
-  gridSize = 40,
+  gridSize = 20,
   trailSize = 0.1,
   maxAge = 250,
   interpolate = 5,
@@ -111,17 +134,17 @@ export default function PixelTrail({
     alpha: true
   },
   gooeyFilter,
-  color = '#ffffff',
+  color = '#00FFFF',
   className = ''
-}) {
-  return (
+}: PixelTrailProps) {
+  return createPortal(
     <>
       {gooeyFilter && <GooeyFilter id={gooeyFilter.id} strength={gooeyFilter.strength} />}
       <Canvas
         {...canvasProps}
         gl={glProps}
-        className={`absolute z-1 ${className}`}
-        style={gooeyFilter && { filter: `url(#${gooeyFilter.id})` }}
+        className={`fixed inset-0 z-[1] pointer-events-auto ${className}`}
+        style={gooeyFilter ? { filter: `url(#${gooeyFilter.id})` } : undefined}
       >
         <Scene
           gridSize={gridSize}
@@ -132,6 +155,9 @@ export default function PixelTrail({
           pixelColor={color}
         />
       </Canvas>
-    </>
-  );
+    </>,
+    document.body
+  )
 }
+
+

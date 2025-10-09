@@ -5,17 +5,18 @@ export function HeroOverlay() {
   const texts = [
     "Tanush Das",
     "a Computer Engineer",
+    "a Systems Architect",
     "a Full Stack Developer",
     "a UI/UX Designer",
-    "a Creative Technologist"
+    "a Data Engineer"
   ]
 
   return (
     <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center scale-[2]">
-      <div className="mt-4 text-center text-lg sm:text-xl" style={{ color: '#FFFFFF' }}>
+      <div className="mt-4 text-center text-lg sm:text-xl" style={{ color: '#3C3CE8' }}>
         <p>Hello World! I'm</p>
       </div>
-      <h1 className="select-none text-center text-2xl sm:text-4xl md:text-5xl font-semibold tracking-tight" style={{ color: '#00FFFF' }}>
+      <h1 className="select-none text-center text-2xl sm:text-4xl md:text-5xl font-semibold tracking-tight" style={{ color: '#00ffff' }}>
         {React.createElement(RotatingText as any, {
           texts: texts,
           rotationInterval: 3000,
