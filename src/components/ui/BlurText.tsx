@@ -1,9 +1,37 @@
 'use client';
 
 import { useEffect, useRef, useState, createElement, useMemo, useCallback } from 'react';
+import type React from 'react';
 import { gsap } from 'gsap';
 
-const TextType = ({
+type VariableSpeed = { min: number; max: number };
+
+type BlurTextProps = {
+  text: string | string[];
+  as?: keyof JSX.IntrinsicElements | React.ComponentType<any>;
+  typingSpeed?: number;
+  // Accept external-friendly props used by callers
+  delay?: number;
+  animateBy?: string;
+  direction?: string;
+  initialDelay?: number;
+  pauseDuration?: number;
+  deletingSpeed?: number;
+  loop?: boolean;
+  className?: string;
+  showCursor?: boolean;
+  hideCursorWhileTyping?: boolean;
+  cursorCharacter?: string;
+  cursorClassName?: string;
+  cursorBlinkDuration?: number;
+  textColors?: string[];
+  variableSpeed?: VariableSpeed;
+  onSentenceComplete?: (text: string, index: number) => void;
+  startOnVisible?: boolean;
+  reverseMode?: boolean;
+} & React.HTMLAttributes<HTMLElement>;
+
+const TextType: React.FC<BlurTextProps> = ({
   text,
   as: Component = 'div',
   typingSpeed = 50,
@@ -17,7 +45,7 @@ const TextType = ({
   cursorCharacter = '|',
   cursorClassName = '',
   cursorBlinkDuration = 0.5,
-  textColors = [],
+  textColors = [] as string[],
   variableSpeed,
   onSentenceComplete,
   startOnVisible = false,

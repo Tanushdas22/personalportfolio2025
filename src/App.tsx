@@ -1,4 +1,5 @@
 import { Canvas } from '@react-three/fiber'
+import type React from 'react'
 import { Suspense } from 'react'
 import { HeroScene } from './scenes/HeroScene'
 import { HeroOverlay } from './components/ui/HeroOverlay'
@@ -71,10 +72,7 @@ function App() {
               <BlurText 
                 text="About Me" 
                 className="text-4xl md:text-6xl"
-                delay={150}
-                animateBy="words"
-                direction="top"
-                textColors={['#3C3CE8']}
+                textColors={['#3C3CE8'] as string[]}
               />
               <p className="text-white/80 text-left" style={{ color: '#00ffff' }}>
                 People often ask me what makes a system tick. For me, it's the magic in the middle—the invisible conversations between devices. As a 4th-year Computer Engineering student, I'm fascinated by the architecture that powers our world, from the complex dance of Communication Systems and robust Networks to the cloud platforms they run on. I love building bridges, both digital and physical.
@@ -118,19 +116,13 @@ function App() {
             <BlurText 
               text="Work Experience" 
               className="text-4xl md:text-6xl block text-left mb-4"
-              delay={100}
-              animateBy="words"
-              direction="top"
-              textColors={['#3C3CE8']}
+              textColors={['#3C3CE8'] as string[]}
             />
             <div className="mb-10">
               <BlurText
                 text="Click each one to learn more"
                 className="text-sm md:text-sm text-left"
-                delay={200}
-                animateBy="words"
-                direction="left"
-                textColors={['#00ffff']}
+                textColors={['#00ffff'] as string[]}
               />
             </div>
             
@@ -190,27 +182,20 @@ function App() {
           <div className="mx-auto max-w-6xl relative z-50">
             <BlurText 
               text="Projects" 
-              className="text-4xl md:text-6xl block text-center mb-10"
-              delay={120}
-              animateBy="words"
-              direction="top"
-              textColors={['#3C3CE8']}
+              className="text-4xl md:text-6xl block text-center mb-4"
+              textColors={['#3C3CE8'] as string[]}
             />
             
+            <div className="mb-10">
+              <BlurText
+                text="Click each one to learn more"
+                className="text-sm md:text-sm text-center"
+                textColors={['#00ffff'] as string[]}
+              />
+            </div>
+            
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                {
-                  title: "7-Segment LED Decoder",
-                  description: "Designed a 7-segment decoder to display hexadecimal values and count numbers.",
-                  tech: "VHDL, FPGA Design, Vivado",
-                  link: "https://github.com/Tanushdas22/7-segLED"
-                },
-                {
-                  title: "Property Findr",
-                  description: "Webscraper for finding properties and notifies users via email",
-                  tech: "Python, BeautifulSoup, APScheduler",
-                  link: "https://github.com/Tanushdas22/PropertyFindr"
-                },
+              {[                
                 {
                   title: "Wordl",
                   description: "Terminal-based guessing game where the user attempts to guess a secret word.",
@@ -224,14 +209,8 @@ function App() {
                   link: "https://github.com/Tanushdas22/LibraryBot"
                 },
                 {
-                  title: "BloodGuard",
-                  description: "A health-tech system integrating wearable data, and ML Insights integrated into an Android app to deliver cardiovascular health insights",
-                  tech: "Python, Scikit-learn, Kotlin, Android Studio, Javascript, HTML, CSS",
-                  link: "https://thisisbloodguard.github.io/"
-                },
-                {
                   title: "Nexus NFT",
-                  description: " Responsive crypto website incorporating grid systems, typography styles, and auto-layout for enhanced collaboration and efficiency",
+                  description: "Responsive crypto website incorporating grid systems, typography styles, and auto-layout",
                   tech: "Figma",
                   link: "https://www.figma.com/proto/tEtMfllQA6AOjS5PurLuhD/Nexus---by-Tanush-Das?node-id=204-2&node-type=CANVAS&t=7KVNf4CUaCK8clb0-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1"
                 },
@@ -240,7 +219,25 @@ function App() {
                   description: "Comprehensive Vehicle Management System",
                   tech: "SketchUp, CAD",
                   link: "https://web.connect.trimble.com/#/project/XdNbN84n9RI/detailviewer/vUg7ypooKts/Kv_JmoMlez0/revisions?stoken=RJDEZMw1FyagLnBcdaIY3OEWwxSX2xM2URMmaf8zlIV-EPK0Ak2inrVUmnAVdyw1&origin=app.connect.trimble.com"
-                }
+                },
+                {
+                  title: "BloodGuard",
+                  description: "A health-tech system integrating wearable data, and ML Insights integrated into an Android app to deliver cardiovascular health insights",
+                  tech: "Python, Scikit-learn, Kotlin, Android Studio, Javascript, HTML, CSS",
+                  link: "https://thisisbloodguard.github.io/"
+                },
+                {
+                  title: "7-Segment LED Decoder",
+                  description: "Designed a 7-segment decoder to display hexadecimal values and count numbers.",
+                  tech: "VHDL, FPGA Design, Vivado",
+                  link: "https://github.com/Tanushdas22/7-segLED"
+                },
+                {
+                  title: "Property Findr",
+                  description: "Webscraper for finding properties and notifies users via email",
+                  tech: "Python, BeautifulSoup, APScheduler",
+                  link: "https://github.com/Tanushdas22/PropertyFindr"
+                }                
               ].map((project, i) => (
                 <ElectricBorder
                   key={i}
@@ -274,11 +271,15 @@ function App() {
               <BlurText 
                 text="Contact" 
                 className="text-4xl md:text-6xl"
-                delay={180}
-                animateBy="words"
-                direction="left"
                 textColors={['#3C3CE8']}
               />
+              <div className="mt-4">
+                <BlurText
+                  text="Tap on the folder!"
+                  className="text-sm md:text-sm"
+                  textColors={['#00ffff']}
+                />
+              </div>
           </div>
           
           <div className="mx-auto max-w-4xl w-full relative z-30">
@@ -293,7 +294,7 @@ function App() {
                     </a>
                   </div>,
                   <div key="github" className="flex items-center justify-center h-full p-2">
-                    <a href="https://github.com/Tanushdas22" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 transition-colors">
+                    <a href="https://github.com/Tanushdas22" target="_blank" rel="noopener noreferrer" className="text-black hover:text-gray-300 transition-colors">
                       <FaGithub size={24} />
                     </a>
                   </div>,
@@ -302,7 +303,7 @@ function App() {
                       <MdEmail size={24} />
                     </a>
                   </div>
-                ]}
+                ] as Array<React.ReactNode | null>}
               />
             </div>
           </div>

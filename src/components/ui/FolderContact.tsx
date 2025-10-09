@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type React from 'react';
 
 const darkenColor = (hex, percent) => {
   let color = hex.startsWith('#') ? hex.slice(1) : hex;
@@ -18,7 +19,14 @@ const darkenColor = (hex, percent) => {
   return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
 };
 
-const Folder = ({ color = '#5227FF', size = 1, items = [], className = '' }) => {
+type FolderProps = {
+  color?: string;
+  size?: number;
+  items?: Array<React.ReactNode | null>;
+  className?: string;
+};
+
+const Folder = ({ color = '#5227FF', size = 1, items = [] as Array<React.ReactNode | null>, className = '' }: FolderProps) => {
   const maxItems = 3;
   const papers = items.slice(0, maxItems);
   while (papers.length < maxItems) {
