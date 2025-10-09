@@ -89,7 +89,7 @@ export default function Folder({ color = '#5227FF', size = 1, items = [], classN
   return (
     <div style={scaleStyle} className={className}>
       <div
-        className={`group relative transition-all duration-200 ease-in cursor-pointer ${
+        className={`group relative transition-all duration-200 ease-in cursor-pointer pointer-events-auto ${
           !open ? 'hover:-translate-y-2' : ''
         }`}
         style={{
@@ -121,7 +121,7 @@ export default function Folder({ color = '#5227FF', size = 1, items = [], classN
                 key={i}
                 onMouseMove={e => handlePaperMouseMove(e, i)}
                 onMouseLeave={e => handlePaperMouseLeave(e, i)}
-                className={`absolute z-20 bottom-[10%] left-1/2 transition-all duration-300 ease-in-out ${
+                className={`absolute z-20 bottom-[10%] left-1/2 transition-all duration-300 ease-in-out pointer-events-auto ${
                   !open ? 'transform -translate-x-1/2 translate-y-[10%] group-hover:translate-y-0' : 'hover:scale-110'
                 } ${sizeClasses}`}
                 style={{

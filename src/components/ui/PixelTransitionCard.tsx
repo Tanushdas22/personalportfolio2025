@@ -87,7 +87,7 @@ export default function PixelTransition({
 
     delayedCallRef.current = gsap.delayedCall(animationStepDuration, () => {
       activeEl.style.display = activate ? 'block' : 'none'
-      activeEl.style.pointerEvents = activate ? 'none' : ''
+      activeEl.style.pointerEvents = 'auto'
     })
 
     gsap.to(pixels, {
@@ -133,9 +133,9 @@ export default function PixelTransition({
     >
       <div style={{ paddingTop: aspectRatio }} />
 
-      <div className="absolute inset-0 w-full h-full">{firstContent}</div>
+      <div className="absolute inset-0 w-full h-full pointer-events-auto">{firstContent}</div>
 
-      <div ref={activeRef} className="absolute inset-0 w-full h-full z-[2]" style={{ display: 'none' }}>
+      <div ref={activeRef} className="absolute inset-0 w-full h-full z-[2] pointer-events-auto" style={{ display: 'none' }}>
         {secondContent}
       </div>
 
