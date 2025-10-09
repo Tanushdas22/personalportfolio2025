@@ -4,7 +4,6 @@ import { HeroScene } from './scenes/HeroScene'
 import { HeroOverlay } from './components/ui/HeroOverlay'
 import PixelTrail from './components/ui/PixelCursor'
 import BlurText from './components/ui/BlurText'
-import GradualBlur from './components/ui/GradualBlur'
 import { LogoLoop } from './components/ui/LogoLoop'
 import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiVite, SiNodedotjs, SiMongodb } from 'react-icons/si'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
@@ -101,7 +100,7 @@ function App() {
 
       {/* Work Experience */}
       <section
-        className="min-h-screen snap-start px-6 py-16 relative overflow-hidden"
+        className="min-h-screen snap-start px-6 py-16 relative overflow-hidden z-20"
       >
         <PixelTrail
           gridSize={50}
@@ -112,7 +111,7 @@ function App() {
           gooeyFilter={{ id: "goo-work", strength: 2 }}
           className="pointer-events-none absolute inset-0"
         />
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-6xl relative z-30">
           <BlurText 
             text="Work Experience" 
             className="text-4xl md:text-6xl block text-center mb-10"
@@ -183,7 +182,7 @@ function App() {
 
       {/* Projects */}
       <section
-        className="min-h-screen snap-start px-6 py-16 relative overflow-hidden"
+        className="min-h-screen snap-start px-6 py-16 relative overflow-hidden z-20"
       >
         <PixelTrail
           gridSize={50}
@@ -194,7 +193,7 @@ function App() {
           gooeyFilter={{ id: "goo-projects", strength: 2 }}
           className="pointer-events-none absolute inset-0"
         />
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-6xl relative z-30">
           <BlurText 
             text="Projects" 
             className="text-4xl md:text-6xl block text-center mb-10"
@@ -249,7 +248,10 @@ function App() {
                 style={{ borderRadius: 16 }}
                 className="col-span-1 h-full"
               >
-                <div className="p-4 bg-black/80 backdrop-blur-sm rounded-[16px] h-full overflow-hidden">
+                <div 
+                  className="p-4 bg-black/80 backdrop-blur-sm rounded-[16px] h-full overflow-hidden cursor-pointer"
+                  onClick={() => console.log('ElectricBorder clicked!', project.title)}
+                >
                   <h3 className="text-lg font-semibold mb-2">{project.title}</h3>
                   <p className="text-white/70 text-sm mb-3 leading-relaxed">{project.description}</p>
                   <div className="text-xs text-cyan-300/80 font-mono">{project.tech}</div>
@@ -272,7 +274,7 @@ function App() {
 
       {/* Contact */}
       <section
-        className="h-screen snap-start grid place-items-center px-6 relative overflow-hidden"
+        className="h-screen snap-start grid place-items-center px-6 relative overflow-hidden z-20"
       >
         <PixelTrail
           gridSize={50}
@@ -283,7 +285,7 @@ function App() {
           gooeyFilter={{ id: "goo-contact", strength: 2 }}
           className="pointer-events-none absolute inset-0"
         />
-        <div className="mx-auto max-w-4xl w-full relative">
+        <div className="mx-auto max-w-4xl w-full relative z-30">
           <div className="absolute top-8 left-8">
             <BlurText 
               text="Contact" 

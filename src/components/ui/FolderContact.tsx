@@ -41,6 +41,7 @@ export default function Folder({ color = '#5227FF', size = 1, items = [], classN
   const paper3 = '#ffffff'
 
   const handleClick = () => {
+    console.log('Folder clicked!', !open)
     setOpen(prev => !prev)
     if (open) {
       setPaperOffsets(Array.from({ length: maxItems }, () => ({ x: 0, y: 0 })))
