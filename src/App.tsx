@@ -248,10 +248,7 @@ function App() {
                 style={{ borderRadius: 16 }}
                 className="col-span-1 h-full"
               >
-                <div 
-                  className="p-4 bg-black/80 backdrop-blur-sm rounded-[16px] h-full overflow-hidden cursor-pointer"
-                  onClick={() => console.log('ElectricBorder clicked!', project.title)}
-                >
+                <div className="p-4 bg-black/80 backdrop-blur-sm rounded-[16px] h-full overflow-hidden cursor-pointer">
                   <h3 className="text-lg font-semibold mb-2">{project.title}</h3>
                   <p className="text-white/70 text-sm mb-3 leading-relaxed">{project.description}</p>
                   <div className="text-xs text-cyan-300/80 font-mono">{project.tech}</div>

@@ -143,7 +143,7 @@ export default function PixelTrail({
       <Canvas
         {...canvasProps}
         gl={glProps}
-        className={`fixed inset-0 z-[9999] pointer-events-auto ${className}`}
+        className={`fixed inset-0 z-[9999] pointer-events-none ${className}`}
         style={gooeyFilter ? { filter: `url(#${gooeyFilter.id})` } : undefined}
       >
         <Scene

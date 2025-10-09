@@ -108,7 +108,6 @@ export default function PixelTransition({
     if (isActive) animatePixels(false)
   }
   const handleClick = () => {
-    console.log('PixelTransition clicked!', !isActive)
     animatePixels(!isActive)
   }
 
