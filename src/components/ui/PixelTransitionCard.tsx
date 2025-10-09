@@ -86,8 +86,22 @@ export default function PixelTransition({
     })
 
     delayedCallRef.current = gsap.delayedCall(animationStepDuration, () => {
-      activeEl.style.display = activate ? 'block' : 'none'
-      activeEl.style.pointerEvents = 'auto'
+      if (activate) {
+        activeEl.style.display = 'block'
+        activeEl.style.pointerEvents = 'auto'
+        // Hide the first content when second content is active
+        const firstContentEl = activeEl.parentElement?.querySelector('.first-content')
+        if (firstContentEl) {
+          (firstContentEl as HTMLElement).style.display = 'none'
+        }
+      } else {
+        activeEl.style.display = 'none'
+        // Show the first content when second content is inactive
+        const firstContentEl = activeEl.parentElement?.querySelector('.first-content')
+        if (firstContentEl) {
+          (firstContentEl as HTMLElement).style.display = 'block'
+        }
+      }
     })
 
     gsap.to(pixels, {
@@ -133,9 +147,9 @@ export default function PixelTransition({
     >
       <div style={{ paddingTop: aspectRatio }} />
 
-      <div className="absolute inset-0 w-full h-full pointer-events-auto">{firstContent}</div>
+      <div className="absolute inset-0 w-full h-full z-[50] pointer-events-auto first-content">{firstContent}</div>
 
-      <div ref={activeRef} className="absolute inset-0 w-full h-full z-[2] pointer-events-auto" style={{ display: 'none' }}>
+      <div ref={activeRef} className="absolute inset-0 w-full h-full z-[60] pointer-events-auto" style={{ display: 'none' }}>
         {secondContent}
       </div>
 

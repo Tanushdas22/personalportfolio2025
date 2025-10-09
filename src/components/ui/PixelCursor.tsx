@@ -1,11 +1,10 @@
 /* eslint-disable react/no-unknown-property */
-import { useMemo } from 'react'
-import { createPortal } from 'react-dom'
-import { Canvas, useThree } from '@react-three/fiber'
-import { shaderMaterial, useTrailTexture } from '@react-three/drei'
-import * as THREE from 'three'
+import { useMemo } from 'react';
+import { Canvas, useThree } from '@react-three/fiber';
+import { shaderMaterial, useTrailTexture } from '@react-three/drei';
+import * as THREE from 'three';
 
-const GooeyFilter = ({ id = 'goo-filter', strength = 10 }: { id?: string; strength?: number }) => {
+const GooeyFilter = ({ id = 'goo-filter', strength = 10 }) => {
   return (
     <svg className="absolute overflow-hidden z-1">
       <defs>
@@ -16,8 +15,8 @@ const GooeyFilter = ({ id = 'goo-filter', strength = 10 }: { id?: string; streng
         </filter>
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 const DotMaterial = shaderMaterial(
   {
@@ -60,23 +59,14 @@ const DotMaterial = shaderMaterial(
       gl_FragColor = vec4(pixelColor, trail);
     }
   `
-)
+);
 
-type SceneProps = {
-  gridSize: number
-  trailSize: number
-  maxAge: number
-  interpolate: number
-  easingFunction: (x: number) => number
-  pixelColor: string
-}
+function Scene({ gridSize, trailSize, maxAge, interpolate, easingFunction, pixelColor }) {
+  const size = useThree(s => s.size);
+  const viewport = useThree(s => s.viewport);
 
-function Scene({ gridSize, trailSize, maxAge, interpolate, easingFunction, pixelColor }: SceneProps) {
-  const size = useThree(s => s.size)
-  const viewport = useThree(s => s.viewport)
-
-  const dotMaterial = useMemo(() => new DotMaterial(), [])
-  dotMaterial.uniforms.pixelColor.value = new THREE.Color(pixelColor)
+  const dotMaterial = useMemo(() => new DotMaterial(), []);
+  dotMaterial.uniforms.pixelColor.value = new THREE.Color(pixelColor);
 
   const [trail, onMove] = useTrailTexture({
     size: 512,
@@ -84,16 +74,16 @@ function Scene({ gridSize, trailSize, maxAge, interpolate, easingFunction, pixel
     maxAge: maxAge,
     interpolate: interpolate || 0.1,
     ease: easingFunction || (x => x)
-  })
+  });
 
   if (trail) {
-    trail.minFilter = THREE.NearestFilter
-    trail.magFilter = THREE.NearestFilter
-    trail.wrapS = THREE.ClampToEdgeWrapping
-    trail.wrapT = THREE.ClampToEdgeWrapping
+    trail.minFilter = THREE.NearestFilter;
+    trail.magFilter = THREE.NearestFilter;
+    trail.wrapS = THREE.ClampToEdgeWrapping;
+    trail.wrapT = THREE.ClampToEdgeWrapping;
   }
 
-  const scale = Math.max(viewport.width, viewport.height) / 2
+  const scale = Math.max(viewport.width, viewport.height) / 2;
 
   return (
     <mesh scale={[scale, scale, 1]} onPointerMove={onMove}>
@@ -105,20 +95,7 @@ function Scene({ gridSize, trailSize, maxAge, interpolate, easingFunction, pixel
         mouseTrail={trail}
       />
     </mesh>
-  )
-}
-
-type PixelTrailProps = {
-  gridSize?: number
-  trailSize?: number
-  maxAge?: number
-  interpolate?: number
-  easingFunction?: (x: number) => number
-  canvasProps?: any
-  glProps?: any
-  gooeyFilter?: { id: string; strength: number }
-  color?: string
-  className?: string
+  );
 }
 
 export default function PixelTrail({
@@ -136,15 +113,15 @@ export default function PixelTrail({
   gooeyFilter,
   color = '#ffffff',
   className = ''
-}: PixelTrailProps) {
-  return createPortal(
+}) {
+  return (
     <>
       {gooeyFilter && <GooeyFilter id={gooeyFilter.id} strength={gooeyFilter.strength} />}
       <Canvas
         {...canvasProps}
         gl={glProps}
-        className={`fixed inset-0 z-[9999] pointer-events-none ${className}`}
-        style={gooeyFilter ? { filter: `url(#${gooeyFilter.id})` } : undefined}
+        className={`absolute z-1 ${className}`}
+        style={gooeyFilter && { filter: `url(#${gooeyFilter.id})` }}
       >
         <Scene
           gridSize={gridSize}
@@ -155,9 +132,6 @@ export default function PixelTrail({
           pixelColor={color}
         />
       </Canvas>
-    </>,
-    document.body
-  )
+    </>
+  );
 }
-
-

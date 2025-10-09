@@ -1,114 +1,104 @@
-import { useEffect, useId, useLayoutEffect, useRef } from 'react'
+import { useEffect, useId, useLayoutEffect, useRef } from 'react';
 
-function hexToRgba(hex: string, alpha = 1) {
-  if (!hex) return `rgba(0,0,0,${alpha})`
-  let h = hex.replace('#', '')
+function hexToRgba(hex, alpha = 1) {
+  if (!hex) return `rgba(0,0,0,${alpha})`;
+  let h = hex.replace('#', '');
   if (h.length === 3) {
     h = h
       .split('')
       .map(c => c + c)
-      .join('')
+      .join('');
   }
-  const int = parseInt(h, 16)
-  const r = (int >> 16) & 255
-  const g = (int >> 8) & 255
-  const b = int & 255
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`
+  const int = parseInt(h, 16);
+  const r = (int >> 16) & 255;
+  const g = (int >> 8) & 255;
+  const b = int & 255;
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-type ElectricBorderProps = {
-  children: React.ReactNode
-  color?: string
-  speed?: number
-  chaos?: number
-  thickness?: number
-  className?: string
-  style?: React.CSSProperties
-}
-
-export default function ElectricBorder({ children, color = '#5227FF', speed = 1, chaos = 1, thickness = 2, className, style }: ElectricBorderProps) {
-  const rawId = useId().replace(/[:]/g, '')
-  const filterId = `turbulent-displace-${rawId}`
-  const svgRef = useRef<SVGSVGElement | null>(null)
-  const rootRef = useRef<HTMLDivElement | null>(null)
-  const strokeRef = useRef<HTMLDivElement | null>(null)
+const ElectricBorder = ({ children, color = '#5227FF', speed = 1, chaos = 1, thickness = 2, className, style }) => {
+  const rawId = useId().replace(/[:]/g, '');
+  const filterId = `turbulent-displace-${rawId}`;
+  const svgRef = useRef(null);
+  const rootRef = useRef(null);
+  const strokeRef = useRef(null);
 
   const updateAnim = () => {
-    const svg = svgRef.current
-    const host = rootRef.current
-    if (!svg || !host) return
+    const svg = svgRef.current;
+    const host = rootRef.current;
+    if (!svg || !host) return;
 
     if (strokeRef.current) {
-      strokeRef.current.style.filter = `url(#${filterId})`
+      strokeRef.current.style.filter = `url(#${filterId})`;
     }
 
-    const width = Math.max(1, Math.round(host.clientWidth || host.getBoundingClientRect().width || 0))
-    const height = Math.max(1, Math.round(host.clientHeight || host.getBoundingClientRect().height || 0))
+    const width = Math.max(1, Math.round(host.clientWidth || host.getBoundingClientRect().width || 0));
+    const height = Math.max(1, Math.round(host.clientHeight || host.getBoundingClientRect().height || 0));
 
-    const dyAnims = Array.from(svg.querySelectorAll('feOffset > animate[attributeName="dy"]')) as unknown as SVGAnimateElement[]
+    const dyAnims = Array.from(svg.querySelectorAll('feOffset > animate[attributeName="dy"]'));
     if (dyAnims.length >= 2) {
-      dyAnims[0].setAttribute('values', `${height}; 0`)
-      dyAnims[1].setAttribute('values', `0; -${height}`)
+      dyAnims[0].setAttribute('values', `${height}; 0`);
+      dyAnims[1].setAttribute('values', `0; -${height}`);
     }
 
-    const dxAnims = Array.from(svg.querySelectorAll('feOffset > animate[attributeName="dx"]')) as unknown as SVGAnimateElement[]
+    const dxAnims = Array.from(svg.querySelectorAll('feOffset > animate[attributeName="dx"]'));
     if (dxAnims.length >= 2) {
-      dxAnims[0].setAttribute('values', `${width}; 0`)
-      dxAnims[1].setAttribute('values', `0; -${width}`)
+      dxAnims[0].setAttribute('values', `${width}; 0`);
+      dxAnims[1].setAttribute('values', `0; -${width}`);
     }
 
-    const baseDur = 6
-    const dur = Math.max(0.001, baseDur / (speed || 1))
-    ;[...dyAnims, ...dxAnims].forEach((a) => a.setAttribute('dur', `${dur}s`))
+    const baseDur = 6;
+    const dur = Math.max(0.001, baseDur / (speed || 1));
+    [...dyAnims, ...dxAnims].forEach(a => a.setAttribute('dur', `${dur}s`));
 
-    const disp = svg.querySelector('feDisplacementMap') as SVGFEDisplacementMapElement | null
-    if (disp) disp.setAttribute('scale', String(30 * (chaos || 1)))
+    const disp = svg.querySelector('feDisplacementMap');
+    if (disp) disp.setAttribute('scale', String(30 * (chaos || 1)));
 
-    const filterEl = svg.querySelector(`#${CSS.escape(filterId)}`) as SVGFilterElement | null
+    const filterEl = svg.querySelector(`#${CSS.escape(filterId)}`);
     if (filterEl) {
-      filterEl.setAttribute('x', '-200%')
-      filterEl.setAttribute('y', '-200%')
-      filterEl.setAttribute('width', '500%')
-      filterEl.setAttribute('height', '500%')
+      filterEl.setAttribute('x', '-200%');
+      filterEl.setAttribute('y', '-200%');
+      filterEl.setAttribute('width', '500%');
+      filterEl.setAttribute('height', '500%');
     }
 
     requestAnimationFrame(() => {
-      ;[...dyAnims, ...dxAnims].forEach((a: any) => {
+      [...dyAnims, ...dxAnims].forEach(a => {
         if (typeof a.beginElement === 'function') {
           try {
-            a.beginElement()
+            a.beginElement();
           } catch {
-            console.warn('ElectricBorder: beginElement failed')
+            console.warn('ElectricBorder: beginElement failed');
           }
         }
-      })
-    })
-  }
+      });
+    });
+  };
 
   useEffect(() => {
-    updateAnim()
+    updateAnim();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [speed, chaos])
+  }, [speed, chaos]);
 
   useLayoutEffect(() => {
-    if (!rootRef.current) return
-    const ro = new ResizeObserver(() => updateAnim())
-    ro.observe(rootRef.current)
-    updateAnim()
-    return () => ro.disconnect()
+    if (!rootRef.current) return;
+    const ro = new ResizeObserver(() => updateAnim());
+    ro.observe(rootRef.current);
+    updateAnim();
+    return () => ro.disconnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   const inheritRadius = {
     borderRadius: style?.borderRadius ?? 'inherit'
-  }
+  };
 
   const strokeStyle = {
     ...inheritRadius,
     borderWidth: thickness,
     borderStyle: 'solid',
     borderColor: color
-  }
+  };
 
   const glow1Style = {
     ...inheritRadius,
@@ -117,7 +107,7 @@ export default function ElectricBorder({ children, color = '#5227FF', speed = 1,
     borderColor: hexToRgba(color, 0.6),
     filter: `blur(${0.5 + thickness * 0.25}px)`,
     opacity: 0.5
-  }
+  };
 
   const glow2Style = {
     ...inheritRadius,
@@ -126,7 +116,7 @@ export default function ElectricBorder({ children, color = '#5227FF', speed = 1,
     borderColor: color,
     filter: `blur(${2 + thickness * 0.5}px)`,
     opacity: 0.5
-  }
+  };
 
   const bgGlowStyle = {
     ...inheritRadius,
@@ -135,7 +125,7 @@ export default function ElectricBorder({ children, color = '#5227FF', speed = 1,
     opacity: 0.3,
     zIndex: -1,
     background: `linear-gradient(-30deg, ${hexToRgba(color, 0.8)}, transparent, ${color})`
-  }
+  };
 
   return (
     <div ref={rootRef} className={'relative isolate ' + (className ?? '')} style={style}>
@@ -170,21 +160,29 @@ export default function ElectricBorder({ children, color = '#5227FF', speed = 1,
             <feComposite in="offsetNoise1" in2="offsetNoise2" result="part1" />
             <feComposite in="offsetNoise3" in2="offsetNoise4" result="part2" />
             <feBlend in="part1" in2="part2" mode="color-dodge" result="combinedNoise" />
-            <feDisplacementMap in="SourceGraphic" in2="combinedNoise" scale="30" xChannelSelector="R" yChannelSelector="B" />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="combinedNoise"
+              scale="30"
+              xChannelSelector="R"
+              yChannelSelector="B"
+            />
           </filter>
         </defs>
       </svg>
 
-      <div className="absolute inset-0 pointer-events-none z-0" style={inheritRadius}>
+      <div className="absolute inset-0 pointer-events-none z-10" style={inheritRadius}>
         <div ref={strokeRef} className="absolute inset-0 box-border" style={strokeStyle} />
         <div className="absolute inset-0 box-border" style={glow1Style} />
         <div className="absolute inset-0 box-border" style={glow2Style} />
         <div className="absolute inset-0" style={bgGlowStyle} />
       </div>
 
-      <div className="relative z-10 pointer-events-auto" style={inheritRadius}>
+      <div className="relative z-5" style={inheritRadius}>
         {children}
       </div>
     </div>
-  )
-}
+  );
+};
+
+export default ElectricBorder;
