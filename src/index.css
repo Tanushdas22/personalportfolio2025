@@ -3,16 +3,42 @@
 /* Ensure the canvas can fill the viewport */
 html, body, #root {
   height: 100%;
+  min-height: 100vh;
+  background-image: url('/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 body {
   margin: 0;
   scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
+  /* Temporarily disable scroll-snap to test if it's causing the white space */
+  /* scroll-snap-type: y mandatory; */
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 /* Ensure sections snap properly */
 section {
   scroll-snap-align: start;
+}
+
+/* Prevent extra space after the last section */
+body {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+/* Ensure no extra space at the end */
+#root {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+/* Fix for scroll-snap extra space */
+section:last-child {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
 }

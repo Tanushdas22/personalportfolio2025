@@ -12,26 +12,14 @@ import { MdEmail } from 'react-icons/md'
 import PixelTransition from './components/ui/PixelTransitionCard'
 import ElectricBorder from './reactbits/ElectricBorder'
 import Folder from './components/ui/FolderContact'
-// Background image placed by user in reference folders
-// Using import so Vite bundles and serves it
-// Use an asset from the public directory to avoid bundling path issues
-// Place your background image at public/bg.jpg
-const bgImageUrl = '/bg.jpg'
+// Background image is now set globally in CSS
 
 function App() {
   return (
-    <div className="relative h-full w-full bg-black text-white">
-      
-
+    <div className="relative min-h-screen w-full text-white">
       {/* Welcome/Hero Section */}
       <section
-        className="relative h-screen snap-start overflow-hidden bg-black"
-        style={{
-          backgroundImage: `url(${bgImageUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
+        className="relative h-screen snap-start overflow-hidden"
       >
         <PixelTrail
           gridSize={50}
@@ -54,13 +42,7 @@ function App() {
 
       {/* About */}
       <section
-        className="min-h-screen snap-start grid place-items-center px-6 relative overflow-hidden bg-black"
-        style={{
-          backgroundImage: `url(${bgImageUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
+        className="min-h-screen snap-start grid place-items-center px-6 relative overflow-hidden"
       >
         <PixelTrail
           gridSize={50}
@@ -104,7 +86,8 @@ function App() {
             ariaLabel="Technology stack"
           />
         </div>
-        <GradualBlur
+        {/* Temporarily disabled GradualBlur to test white space issue */}
+        {/* <GradualBlur
           target="parent"
           position="bottom"
           height="6rem"
@@ -113,18 +96,12 @@ function App() {
           curve="bezier"
           exponential={true}
           opacity={1}
-        />
+        /> */}
       </section>
 
       {/* Work Experience */}
       <section
-        className="min-h-screen snap-start px-6 py-16 relative overflow-hidden bg-black"
-        style={{
-          backgroundImage: `url(${bgImageUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
+        className="min-h-screen snap-start px-6 py-16 relative overflow-hidden"
       >
         <PixelTrail
           gridSize={50}
@@ -192,7 +169,8 @@ function App() {
             ))}
           </div>
         </div>
-        <GradualBlur
+        {/* Temporarily disabled GradualBlur to test white space issue */}
+        {/* <GradualBlur
           target="parent"
           position="bottom"
           height="4rem"
@@ -200,18 +178,12 @@ function App() {
           divCount={4}
           curve="ease-out"
           opacity={0.8}
-        />
+        /> */}
       </section>
 
       {/* Projects */}
       <section
-        className="min-h-screen snap-start px-6 py-16 relative overflow-hidden bg-black"
-        style={{
-          backgroundImage: `url(${bgImageUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
+        className="min-h-screen snap-start px-6 py-16 relative overflow-hidden"
       >
         <PixelTrail
           gridSize={50}
@@ -286,7 +258,8 @@ function App() {
             ))}
           </div>
         </div>
-        <GradualBlur
+        {/* Temporarily disabled GradualBlur to test white space issue */}
+        {/* <GradualBlur
           target="parent"
           position="bottom"
           height="5rem"
@@ -294,18 +267,12 @@ function App() {
           divCount={6}
           curve="bezier"
           opacity={0.9}
-        />
+        /> */}
       </section>
 
       {/* Contact */}
       <section
-        className="min-h-screen snap-start grid place-items-center px-6 py-24 relative overflow-hidden bg-black"
-        style={{
-          backgroundImage: `url(${bgImageUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
+        className="h-screen snap-start grid place-items-center px-6 relative overflow-hidden"
       >
         <PixelTrail
           gridSize={50}
