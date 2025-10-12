@@ -120,7 +120,7 @@ function App() {
             />
             <div className="mb-10">
               <BlurText
-                text="Click each one to learn more"
+                text="Hover over each one to learn more"
                 className="text-sm md:text-sm text-left"
                 textColors={['#00ffff'] as string[]}
               />

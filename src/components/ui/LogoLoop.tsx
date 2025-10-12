@@ -10,26 +10,21 @@ const toCssLength = (value: any) => (typeof value === 'number' ? `${value}px` : 
 
 const cx = (...parts: any[]) => parts.filter(Boolean).join(' ')
 
-const useResizeObserver = (callback: () => void, elements: React.RefObject<any>[], dependencies: any[]) => {
+const useResizeObserver = (callback: () => void, _elements: React.RefObject<any>[], dependencies: any[]) => {
   useEffect(() => {
-    if (!window.ResizeObserver) {
-      const handleResize = () => callback()
-      window.addEventListener('resize', handleResize)
-      callback()
-      return () => window.removeEventListener('resize', handleResize)
+    // Force fallback to window resize for better compatibility
+    const handleResize = () => {
+      // Add small delay to ensure DOM is ready
+      setTimeout(callback, 10)
     }
-
-    const observers = elements.map(ref => {
-      if (!ref.current) return null
-      const observer = new ResizeObserver(callback)
-      observer.observe(ref.current)
-      return observer
-    })
-
+    
+    window.addEventListener('resize', handleResize)
+    // Call immediately and after a short delay
     callback()
+    setTimeout(callback, 100)
 
     return () => {
-      observers.forEach(observer => observer?.disconnect())
+      window.removeEventListener('resize', handleResize)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencies)
@@ -82,10 +77,8 @@ const useAnimationLoop = (trackRef: React.RefObject<any>, targetVelocity: number
     const track = trackRef.current
     if (!track) return
 
-    const prefersReduced =
-      typeof window !== 'undefined' &&
-      window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    // Temporarily disable prefers-reduced-motion check for debugging
+    const prefersReduced = false // Force animations to always run
 
     if (seqWidth > 0) {
       offsetRef.current = ((offsetRef.current % seqWidth) + seqWidth) % seqWidth
@@ -119,6 +112,7 @@ const useAnimationLoop = (trackRef: React.RefObject<any>, targetVelocity: number
 
         const translateX = -offsetRef.current
         track.style.transform = `translate3d(${translateX}px, 0, 0)`
+        track.style.willChange = 'transform' // Force hardware acceleration
       }
 
       rafRef.current = requestAnimationFrame(animate)
