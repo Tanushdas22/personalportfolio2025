@@ -8,7 +8,7 @@ type VariableSpeed = { min: number; max: number };
 
 type BlurTextProps = {
   text: string | string[];
-  as?: keyof JSX.IntrinsicElements | React.ComponentType<any>;
+  as?: keyof React.JSX.IntrinsicElements | React.ComponentType<any>;
   typingSpeed?: number;
   // Accept external-friendly props used by callers
   delay?: number;
@@ -107,7 +107,7 @@ const TextType: React.FC<BlurTextProps> = ({
   useEffect(() => {
     if (!isVisible) return;
 
-    let timeout;
+    let timeout: number;
 
     const currentText = textArray[currentTextIndex];
     const processedText = reverseMode ? currentText.split('').reverse().join('') : currentText;
@@ -155,7 +155,9 @@ const TextType: React.FC<BlurTextProps> = ({
       executeTypingAnimation();
     }
 
-    return () => clearTimeout(timeout);
+    return () => {
+      if (timeout) clearTimeout(timeout);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     currentCharIndex,
@@ -178,7 +180,7 @@ const TextType: React.FC<BlurTextProps> = ({
     hideCursorWhileTyping && (currentCharIndex < textArray[currentTextIndex].length || isDeleting);
 
   return createElement(
-    Component,
+    Component as React.ElementType,
     {
       ref: containerRef,
       className: `inline-block whitespace-pre-wrap tracking-tight ${className}`,

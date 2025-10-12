@@ -1,12 +1,12 @@
 import { useEffect, useId, useLayoutEffect, useRef } from 'react';
 
-function hexToRgba(hex, alpha = 1) {
+function hexToRgba(hex: string, alpha: number = 1): string {
   if (!hex) return `rgba(0,0,0,${alpha})`;
   let h = hex.replace('#', '');
   if (h.length === 3) {
     h = h
       .split('')
-      .map(c => c + c)
+      .map((c: string) => c + c)
       .join('');
   }
   const int = parseInt(h, 16);
@@ -16,12 +16,30 @@ function hexToRgba(hex, alpha = 1) {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-const ElectricBorder = ({ children, color = '#5227FF', speed = 1, chaos = 1, thickness = 2, className, style }) => {
+interface ElectricBorderProps {
+  children: React.ReactNode;
+  color?: string;
+  speed?: number;
+  chaos?: number;
+  thickness?: number;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+const ElectricBorder = ({ 
+  children, 
+  color = '#5227FF', 
+  speed = 1, 
+  chaos = 1, 
+  thickness = 2, 
+  className, 
+  style 
+}: ElectricBorderProps) => {
   const rawId = useId().replace(/[:]/g, '');
   const filterId = `turbulent-displace-${rawId}`;
-  const svgRef = useRef(null);
-  const rootRef = useRef(null);
-  const strokeRef = useRef(null);
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const strokeRef = useRef<HTMLDivElement | null>(null);
 
   const updateAnim = () => {
     const svg = svgRef.current;
@@ -35,13 +53,13 @@ const ElectricBorder = ({ children, color = '#5227FF', speed = 1, chaos = 1, thi
     const width = Math.max(1, Math.round(host.clientWidth || host.getBoundingClientRect().width || 0));
     const height = Math.max(1, Math.round(host.clientHeight || host.getBoundingClientRect().height || 0));
 
-    const dyAnims = Array.from(svg.querySelectorAll('feOffset > animate[attributeName="dy"]'));
+    const dyAnims = Array.from(svg.querySelectorAll('feOffset > animate[attributeName="dy"]')) as SVGAnimateElement[];
     if (dyAnims.length >= 2) {
       dyAnims[0].setAttribute('values', `${height}; 0`);
       dyAnims[1].setAttribute('values', `0; -${height}`);
     }
 
-    const dxAnims = Array.from(svg.querySelectorAll('feOffset > animate[attributeName="dx"]'));
+    const dxAnims = Array.from(svg.querySelectorAll('feOffset > animate[attributeName="dx"]')) as SVGAnimateElement[];
     if (dxAnims.length >= 2) {
       dxAnims[0].setAttribute('values', `${width}; 0`);
       dxAnims[1].setAttribute('values', `0; -${width}`);
@@ -51,10 +69,10 @@ const ElectricBorder = ({ children, color = '#5227FF', speed = 1, chaos = 1, thi
     const dur = Math.max(0.001, baseDur / (speed || 1));
     [...dyAnims, ...dxAnims].forEach(a => a.setAttribute('dur', `${dur}s`));
 
-    const disp = svg.querySelector('feDisplacementMap');
+    const disp = svg.querySelector('feDisplacementMap') as SVGElement;
     if (disp) disp.setAttribute('scale', String(30 * (chaos || 1)));
 
-    const filterEl = svg.querySelector(`#${CSS.escape(filterId)}`);
+    const filterEl = svg.querySelector(`#${CSS.escape(filterId)}`) as SVGElement;
     if (filterEl) {
       filterEl.setAttribute('x', '-200%');
       filterEl.setAttribute('y', '-200%');
@@ -63,7 +81,7 @@ const ElectricBorder = ({ children, color = '#5227FF', speed = 1, chaos = 1, thi
     }
 
     requestAnimationFrame(() => {
-      [...dyAnims, ...dxAnims].forEach(a => {
+      [...dyAnims, ...dxAnims].forEach((a: SVGAnimateElement) => {
         if (typeof a.beginElement === 'function') {
           try {
             a.beginElement();

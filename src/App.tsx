@@ -19,14 +19,14 @@ function App() {
     <div className="relative min-h-screen w-full text-white">
       {/* Fixed Particles Background - Like CSS background-attachment: fixed */}
       <Particles
-        particleCount={300}
+        particleCount={500}
         particleSpread={15}
         speed={0.08}
-        particleColors={['#00FFFF', '#00CCCC', '#009999']}
+        particleColors={['#FFFFFF', '#FFFFFF', '#FFFFFF']}
         moveParticlesOnHover={true}
         particleHoverFactor={0.5}
         alphaParticles={false}
-        particleBaseSize={80}
+        particleBaseSize={150}
         sizeRandomness={1.5}
         cameraDistance={25}
         disableRotation={false}
@@ -132,27 +132,45 @@ function App() {
                   title: "Systems Engineering Intern",
                   company: "City of Edmonton",
                   period: "Jan 2025 - Sep 2025",
-                  description:"2.63B $ Valley Line West LRT project"
+                  description:"Performed technical reviews and integration of contractor system designs on the $2.63B Valley Line West LRT project."
                 },
                 {
                   title: "Research Intern",
                   company: "University of Alberta Engineering",
                   period: "Sep 2023 - Dec 2023",
-                  description:"Automated Data Collection using Python and LabView"
+                  description:"Automated sensor data collection using Python and LabView, processing over 10,000 data points for research analysis."
                 },
                 {
                   title: "Engineering Intern",
                   company: "Al Futtaim Willis",
                   period: "May 2023 - Aug 2023",
-                  description: "Created Figma Designs for the AFW Wellness App"
+                  description: "Proposed comprehensive risk engineering reports of client properties, oprimizing $750,000 worth of machinery."
                 },
                 {
                   title: "Robotics Research Intern",
                   company: "Manipal Academy of Higher Education",
                   period: "Aug 2021 - Sep 2021",
-                  description: "Designed and programmed a rover in Arduino."
+                  description: "Designed and programmed an Arduino-based rover, achieving 95% accuracy in autonomous navigation tasks."
                 }
-              ].map((job, i) => (
+              ].map((job, i) => {
+                // Function to render text with highlighted numbers
+                const renderTextWithNumbers = (text: string) => {
+                  const parts = text.split(/(\$?\d+[.,]?\d*[BKM%]?)/g);
+                  return parts.map((part, index) => {
+                    if (/\$?\d+[.,]?\d*[BKM%]?/.test(part)) {
+                      return (
+                        <span key={index} className="block">
+                          <span className="text-2xl md:text-3xl font-bold text-blue-400 leading-none">
+                            {part}
+                          </span>
+                        </span>
+                      );
+                    }
+                    return <span key={index}>{part}</span>;
+                  });
+                };
+
+                return (
                 <PixelTransition
                   key={i}
                   firstContent={
@@ -164,7 +182,9 @@ function App() {
                   }
                   secondContent={
                     <div className="p-6 h-full flex flex-col justify-center bg-gradient-to-br from-purple-600/20 to-blue-600/20">
-                      <p className="text-white/90 text-sm leading-relaxed">{job.description}</p>
+                      <div className="text-white/90 text-base leading-relaxed space-y-2">
+                        {renderTextWithNumbers(job.description)}
+                      </div>
                     </div>
                   }
                   gridSize={12}
@@ -172,7 +192,8 @@ function App() {
                   animationStepDuration={0.4}
                   aspectRatio="60%"
                 />
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
@@ -237,7 +258,31 @@ function App() {
                   description: "Webscraper for finding properties and notifies users via email",
                   tech: "Python, BeautifulSoup, APScheduler",
                   link: "https://github.com/Tanushdas22/PropertyFindr"
-                }                
+                },
+                {
+                  title: "Tanushell",
+                  description: "Custom Linux shell implementation with process management, job control, and I/O redirection",
+                  tech: "C, Linux",
+                  link: "https://github.com/Tanushdas22/Tanushell"
+                  },
+                  {
+                  title: "EmoteeLawg",
+                  description: "Android emotion tracking app with persistent storage using Room database and MVVM architecture",
+                  tech: "Java, Android Studio, Room, LiveData, ViewModel",
+                  link: "https://github.com/Tanushdas22/Emoteelawg"
+                  },
+                  {
+                  title: "LLM Maze Solver using Prompt Engineering ",
+                  description: "Research project exploring Tree of Thought prompting strategies for spatial reasoning tasks with GPT models",
+                  tech: "Python, Jupyter, OpenAI API",
+                  link: "https://github.com/Tanushdas22/MazeSolver"
+                  },
+                  {
+                  title: "Automated ML Pipeline",
+                  description: "End-to-end machine learning pipeline for breast cancer diagnosis with KNN classification and ethical analysis",
+                  tech: "Python, scikit-learn, pandas, matplotlib",
+                  link: "https://github.com/Tanushdas22/MLP"
+                  }                
               ].map((project, i) => (
                 <ElectricBorder
                   key={i}
@@ -288,21 +333,15 @@ function App() {
                 size={2}
                 color="#5227FF"
                 items={[
-                  <div key="linkedin" className="flex items-center justify-center h-full p-2">
-                    <a href="www.linkedin.com/in/tanush-das" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-400 transition-colors">
-                      <FaLinkedin size={24} />
-                    </a>
-                  </div>,
-                  <div key="github" className="flex items-center justify-center h-full p-2">
-                    <a href="https://github.com/Tanushdas22" target="_blank" rel="noopener noreferrer" className="text-black hover:text-gray-300 transition-colors">
-                      <FaGithub size={24} />
-                    </a>
-                  </div>,
-                  <div key="email" className="flex items-center justify-center h-full p-2">
-                    <a href="mailto:tanushra@ualberta.ca" className="text-green-500 hover:text-green-400 transition-colors">
-                      <MdEmail size={24} />
-                    </a>
-                  </div>
+                  <a key="linkedin" href="https://www.linkedin.com/in/tanush-das" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center h-full p-2 w-full cursor-pointer hover:bg-blue-50 transition-colors duration-200 rounded-lg">
+                    <FaLinkedin size={24} className="text-blue-500" />
+                  </a>,
+                  <a key="github" href="https://github.com/Tanushdas22" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center h-full p-2 w-full cursor-pointer hover:bg-gray-50 transition-colors duration-200 rounded-lg">
+                    <FaGithub size={24} className="text-black" />
+                  </a>,
+                  <a key="email" href="mailto:tanushra@ualberta.ca" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center h-full p-2 w-full cursor-pointer hover:bg-green-50 transition-colors duration-200 rounded-lg">
+                    <MdEmail size={24} className="text-green-500" />
+                  </a>
                 ] as Array<React.ReactNode | null>}
               />
             </div>

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import type React from 'react';
 
-const darkenColor = (hex, percent) => {
+const darkenColor = (hex: string, percent: number): string => {
   let color = hex.startsWith('#') ? hex.slice(1) : hex;
   if (color.length === 3) {
     color = color
       .split('')
-      .map(c => c + c)
+      .map((c: string) => c + c)
       .join('');
   }
   const num = parseInt(color, 16);
@@ -48,7 +48,7 @@ const Folder = ({ color = '#5227FF', size = 1, items = [] as Array<React.ReactNo
     }
   };
 
-  const handlePaperMouseMove = (e, index) => {
+  const handlePaperMouseMove = (e: React.MouseEvent<HTMLDivElement>, index: number) => {
     if (!open) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
@@ -62,10 +62,10 @@ const Folder = ({ color = '#5227FF', size = 1, items = [] as Array<React.ReactNo
     });
   };
 
-  const handlePaperMouseLeave = (e, index) => {
+  const handlePaperMouseLeave = (_e: React.MouseEvent<HTMLDivElement>, _index: number) => {
     setPaperOffsets(prev => {
       const newOffsets = [...prev];
-      newOffsets[index] = { x: 0, y: 0 };
+      newOffsets[_index] = { x: 0, y: 0 };
       return newOffsets;
     });
   };
@@ -80,7 +80,7 @@ const Folder = ({ color = '#5227FF', size = 1, items = [] as Array<React.ReactNo
 
   const scaleStyle = { transform: `scale(${size})` };
 
-  const getOpenTransform = index => {
+  const getOpenTransform = (index: number): string => {
     if (index === 0) return 'translate(-120%, -70%) rotate(-15deg)';
     if (index === 1) return 'translate(10%, -70%) rotate(15deg)';
     if (index === 2) return 'translate(-50%, -100%) rotate(5deg)';

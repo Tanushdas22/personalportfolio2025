@@ -3,6 +3,29 @@
 import { useRef, useEffect, useCallback } from 'react';
 import gsap from 'gsap';
 
+interface BlobCursorProps {
+  blobType?: 'circle' | 'square';
+  fillColor?: string;
+  trailCount?: number;
+  sizes?: number[];
+  innerSizes?: number[];
+  innerColor?: string;
+  opacities?: number[];
+  shadowColor?: string;
+  shadowBlur?: number;
+  shadowOffsetX?: number;
+  shadowOffsetY?: number;
+  filterId?: string;
+  filterStdDeviation?: number;
+  filterColorMatrixValues?: string;
+  useFilter?: boolean;
+  fastDuration?: number;
+  slowDuration?: number;
+  fastEase?: string;
+  slowEase?: string;
+  zIndex?: number;
+}
+
 export default function BlobCursor({
   blobType = 'circle',
   fillColor = '#5227FF',
@@ -24,9 +47,9 @@ export default function BlobCursor({
   fastEase = 'power3.out',
   slowEase = 'power1.out',
   zIndex = 100
-}) {
-  const containerRef = useRef(null);
-  const blobsRef = useRef([]);
+}: BlobCursorProps) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const blobsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   const updateOffset = useCallback(() => {
     if (!containerRef.current) return { left: 0, top: 0 };
@@ -35,10 +58,10 @@ export default function BlobCursor({
   }, []);
 
   const handleMove = useCallback(
-    e => {
+    (e: MouseEvent | TouchEvent) => {
       const { left, top } = updateOffset();
-      const x = 'clientX' in e ? e.clientX : e.touches[0].clientX;
-      const y = 'clientY' in e ? e.clientY : e.touches[0].clientY;
+      const x = 'clientX' in e ? e.clientX : (e as TouchEvent).touches[0].clientX;
+      const y = 'clientY' in e ? e.clientY : (e as TouchEvent).touches[0].clientY;
 
       blobsRef.current.forEach((el, i) => {
         if (!el) return;
@@ -88,7 +111,9 @@ export default function BlobCursor({
         {Array.from({ length: trailCount }).map((_, i) => (
           <div
             key={i}
-            ref={el => (blobsRef.current[i] = el)}
+            ref={(el: HTMLDivElement | null) => {
+              blobsRef.current[i] = el;
+            }}
             className="absolute will-change-transform transform -translate-x-1/2 -translate-y-1/2"
             style={{
               width: sizes[i],
