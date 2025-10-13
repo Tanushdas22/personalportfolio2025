@@ -67,14 +67,14 @@ function App() {
         </div>
 
         {/* About Section */}
-        <div className="min-h-screen grid place-items-center px-4 sm:px-6 py-8 sm:py-16 relative" style={{ zIndex: 0, color: '#ff0000' }}>
-          <div className="max-w-4xl text-center space-y-6 sm:space-y-8">
+        <div className="min-h-screen grid place-items-center px-3 sm:px-6 py-8 sm:py-16 relative" style={{ zIndex: 0, color: '#ff0000' }}>
+          <div className="max-w-4xl text-center space-y-4 sm:space-y-8">
               <BlurText 
                 text="About Me" 
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl"
                 textColors={['#3C3CE8'] as string[]}
               />
-              <p className="text-white/80 text-left text-sm sm:text-base lg:text-lg leading-relaxed px-2 sm:px-0" style={{ color: '#00ffff' }}>
+              <p className="text-white/80 text-left text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed px-1 sm:px-0 break-words" style={{ color: '#00ffff' }}>
                 People often ask me what makes a system tick. For me, it's the magic in the middle—the invisible conversations between devices. As a 4th-year Computer Engineering student, I'm fascinated by the architecture that powers our world, from the complex dance of Communication Systems and robust Networks to the cloud platforms they run on. I love building bridges, both digital and physical.
                 <br/><br/> When I'm not designing the backbone of systems, I'm crafting their face, diving into the creative world of Web Development. I get a kick out of turning complex ideas into sleek, user-friendly interfaces, primarily wielding TypeScript and the React library. And for the heavy lifting behind the scenes? You'll find me loyal to Java, a passion first sparked by tinkering with Android development.
                 <br/><br/> But my drive to build and organize isn't confined to code. I've channeled that same energy into leading teams and managing resources, having served as the VP Finance for my Engineering Student Society and as a Hardware Associate for NeurAlbertaTech. I've also orchestrated the tech behind the scenes as the Director of IT & Logistics for Instilt Educate.

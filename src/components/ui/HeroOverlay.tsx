@@ -12,11 +12,11 @@ export function HeroOverlay() {
   ]
 
   return (
-    <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center scale-[2]">
-      <div className="mt-4 text-center text-lg sm:text-xl" style={{ color: '#3C3CE8' }}>
+    <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center scale-100 sm:scale-125 md:scale-150 lg:scale-[2] px-4">
+      <div className="mt-2 sm:mt-4 text-center text-sm sm:text-lg md:text-xl" style={{ color: '#3C3CE8' }}>
         <p>Hello World! I'm</p>
       </div>
-      <h1 className="select-none text-center text-2xl sm:text-4xl md:text-5xl font-semibold tracking-tight" style={{ color: '#00ffff' }}>
+      <h1 className="select-none text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold tracking-tight px-2" style={{ color: '#00ffff' }}>
         {React.createElement(RotatingText as any, {
           texts: texts,
           rotationInterval: 3000,
