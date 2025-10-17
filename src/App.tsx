@@ -24,13 +24,13 @@ function App() {
         speed={0.08}
         particleColors={['#FFFFFF', '#FFFFFF', '#FFFFFF']}
         moveParticlesOnHover={true}
-        particleHoverFactor={0.5}
+        particleHoverFactor={2.0}
         alphaParticles={false}
         particleBaseSize={150}
         sizeRandomness={1.5}
         cameraDistance={25}
         disableRotation={false}
-        className="particles-fixed"
+        className="particles-fixed fixed inset-0"
       />
       
        <BlobCursor

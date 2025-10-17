@@ -144,7 +144,8 @@ const Particles = ({
     };
 
     if (moveParticlesOnHover) {
-      container.addEventListener('mousemove', handleMouseMove);
+      // Add mouse events to window so they work even when particles are behind other elements
+      window.addEventListener('mousemove', handleMouseMove);
     }
 
     const count = particleCount;
@@ -224,7 +225,7 @@ const Particles = ({
     return () => {
       window.removeEventListener('resize', resize);
       if (moveParticlesOnHover) {
-        container.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mousemove', handleMouseMove);
       }
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
       if (container.contains(gl.canvas)) {
