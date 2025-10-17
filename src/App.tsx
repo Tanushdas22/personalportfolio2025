@@ -10,7 +10,6 @@ import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiVite, SiNodedotjs,
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
 import PixelTransition from './components/ui/PixelTransitionCard'
-import ElectricBorder from './reactbits/ElectricBorder'
 import Folder from './components/ui/FolderContact'
 import Particles from './components/ui/Particles'
 
@@ -250,7 +249,7 @@ function App() {
                   link: "https://thisisbloodguard.github.io/"
                 },
                 {
-                  title: "7-Segment LED Decoder",
+                  title: "LED Decoder",
                   description: "Designed a 7-segment decoder to display hexadecimal values and count numbers.",
                   tech: "VHDL, FPGA Design, Vivado",
                   link: "https://github.com/Tanushdas22/7-segLED"
@@ -274,38 +273,49 @@ function App() {
                   link: "https://github.com/Tanushdas22/Emoteelawg"
                   },
                   {
-                  title: "LLM Maze Solver using Prompt Engineering ",
+                  title: "LLM Maze Solver",
                   description: "Research project exploring Tree of Thought prompting strategies for spatial reasoning tasks with GPT models",
                   tech: "Python, Jupyter, OpenAI API",
                   link: "https://github.com/Tanushdas22/MazeSolver"
                   },
                   {
-                  title: "Automated ML Pipeline",
+                  title: "Cancer-Free",
                   description: "End-to-end machine learning pipeline for breast cancer diagnosis with KNN classification and ethical analysis",
                   tech: "Python, scikit-learn, pandas, matplotlib",
                   link: "https://github.com/Tanushdas22/MLP"
                   }                
               ].map((project, i) => (
-                <ElectricBorder
+                <PixelTransition
                   key={i}
-                  color="#7df9ff"
-                  speed={1}
-                  chaos={0.5}
-                  thickness={2}
-                  style={{ borderRadius: 16 }}
+                  firstContent={
+                    <div className="p-4 h-full flex flex-col justify-center">
+                      <h3 className="text-2xl font-semibold mb-2">{project.title}</h3>
+                      <div className="text-xs text-cyan-300/80 font-mono">{project.tech}</div>
+                    </div>
+                  }
+                  secondContent={
+                    <div className="p-4 h-full flex flex-col justify-center bg-gradient-to-br from-purple-600/20 to-blue-600/20">
+                      <div className="text-white/90 text-sm leading-relaxed">
+                        {project.description}
+                      </div>
+                      <div className="mt-4">
+                        <a 
+                          href={project.link}
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="inline-block px-3 py-1 bg-cyan-500/20 text-cyan-300 text-xs rounded-full hover:bg-cyan-500/30 transition-colors duration-200"
+                        >
+                          View Project →
+                        </a>
+                      </div>
+                    </div>
+                  }
+                  gridSize={12}
+                  pixelColor='#7df9ff'
+                  animationStepDuration={0.4}
+                  aspectRatio="60%"
                   className="col-span-1 h-full"
-                >
-                  <a 
-                    href={project.link}
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="block p-4 bg-black/80 backdrop-blur-sm rounded-[16px] h-full overflow-hidden cursor-pointer hover:bg-black/90 transition-colors duration-200"
-                  >
-                    <h3 className="text-lg font-semibold mb-2">{project.title}</h3>
-                    <p className="text-white/70 text-sm mb-3 leading-relaxed">{project.description}</p>
-                    <div className="text-xs text-cyan-300/80 font-mono">{project.tech}</div>
-                  </a>
-                </ElectricBorder>
+                />
               ))}
             </div>
           </div>
