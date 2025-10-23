@@ -57,7 +57,7 @@ const VerticalNavigation: React.FC = () => {
         <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/30 transform -translate-x-1/2"></div>
         
         {/* Navigation items */}
-        {navigationItems.map((item, index) => (
+        {navigationItems.map((item) => (
           <div key={item.id} className="relative flex items-center">
             {/* Number */}
             <div 
